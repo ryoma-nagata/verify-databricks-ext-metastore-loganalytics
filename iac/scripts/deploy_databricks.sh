@@ -44,38 +44,10 @@ echo "Start deploying databricks "$databricksWorkspaceName
 
 export DATABRICKS_AAD_TOKEN=$(az account get-access-token --resource 2ff814a6-3304-4ab8-85cb-cd0e6f879c1d | jq .accessToken --raw-output)
 databricks configure --aad-token --host "${databricksHostUrl}"
-################################################################
-# Create Scope 
-# Hive metastore setting
-# Create hive secret scope
-echo "Create Scope"
-
-databricks secrets create-scope --scope "${hiveScopeName}" --scope-backend-type 'AZURE_KEYVAULT' \
---resource-id "${hiveKeyVaultResourceId}" --dns-name "${hiveKeyVaultDnsName}" 
-# put acl
-databricks secrets put-acl --scope "${hiveScopeName}"  --permission READ --principal "users" 
-
-# loganalytics setting
-# Create logAnalytics secret scope
-databricks secrets create-scope --scope "${logScopeName}" --scope-backend-type 'AZURE_KEYVAULT' \
---resource-id "${logKeyVaultResourceId}" --dns-name "${logKeyVaultDnsName}" 
-# put acl
-databricks secrets put-acl --scope "${logScopeName}" --permission READ --principal "users" 
-################################################################
-# create Policy
-
-echo "Create Policy "
 
 adbTmpDir=.tmp/databricks
 mkdir -p $adbTmpDir && cp -a ./iac/code/databricks .tmp/
 tmpfile=.tmpfile
-
-# create allPurpose policy
-allPurposeDefinition=$(jq -c '.' ./iac/code/databricks/policies/allPurposePolicy.json) 
-jq --arg definition "$allPurposeDefinition" '.definition = $definition' ./iac/code/databricks/policies/allPurposePolicyBase.json \
- > "$tmpfile" && mv "$tmpfile" "${adbTmpDir}"/policies/allPurposePolicy.json
-
-databricks cluster-policies create --json-file "${adbTmpDir}"/policies/allPurposePolicy.json
 ################################################################
 # Log Analytics configure
 # upload spark-monitoring.sh
@@ -118,6 +90,37 @@ echo 'run_page_url is' $runPageUrl
 # done
 
 # databricks workspace delete  "/ConfigureDatabricksWorkspace"
+################################################################
+# Create Scope 
+# Hive metastore setting
+# Create hive secret scope
+echo "Create Scope"
+
+databricks secrets create-scope --scope "${hiveScopeName}" --scope-backend-type 'AZURE_KEYVAULT' \
+--resource-id "${hiveKeyVaultResourceId}" --dns-name "${hiveKeyVaultDnsName}"
+
+# put acl
+databricks secrets put-acl --scope "${hiveScopeName}"  --permission READ --principal "users" 
+
+# loganalytics setting
+# Create logAnalytics secret scope
+databricks secrets create-scope --scope "${logScopeName}" --scope-backend-type 'AZURE_KEYVAULT' \
+--resource-id "${logKeyVaultResourceId}" --dns-name "${logKeyVaultDnsName}" 
+# put acl
+databricks secrets put-acl --scope "${logScopeName}" --permission READ --principal "users" 
+
+################################################################
+# create Policy
+
+echo "Create Policy "
+
+
+# create allPurpose policy
+allPurposeDefinition=$(jq -c '.' ./iac/code/databricks/policies/allPurposePolicy.json) 
+jq --arg definition "$allPurposeDefinition" '.definition = $definition' ./iac/code/databricks/policies/allPurposePolicyBase.json \
+ > "${adbTmpDir}"/policies/allPurposePolicy_updated.json
+sleep 20
+databricks cluster-policies create --json-file "${adbTmpDir}"/policies/allPurposePolicy_updated.json 
 
 echo "Finish deploying databricks "$databricksWorkspaceName
 
