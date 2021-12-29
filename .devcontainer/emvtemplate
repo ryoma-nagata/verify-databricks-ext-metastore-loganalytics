@@ -10,3 +10,7 @@
 
 # リソース名をユニークに保つ文字列 (最大4文字). 既定値: ランダムな数字がふられます
 # DEPLOYMENT_ID=
+
+# AzureSQLのログイン情報
+SQLLOGIN=''
+SQLPASSWORD=''
