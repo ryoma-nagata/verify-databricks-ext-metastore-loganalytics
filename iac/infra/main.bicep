@@ -12,6 +12,7 @@ param location string = 'japaneast'
 param sqlLogin string = 'sqladmin'
 param sqlPassword string = 'P@ssword1234'
 param signed_in_user_object_id string 
+param databricksId string
 
 var uniqueName = '${project}-${deployment_id}-${env}'
 var resouceGroupName = 'rg-${uniqueName}'
@@ -104,6 +105,7 @@ module AssignmentmetaDatabricks 'modules/auxiliary/databricksRoleAssignmentKeyVa
   scope:verifyDatabricksRG
   params:{
     keyVaultId:metakeyVault.outputs.keyvaultId
+    databricksId:databricksId
   }
 }
 module AssignmentlogDatabricks 'modules/auxiliary/databricksRoleAssignmentKeyVault.bicep' ={
@@ -111,6 +113,7 @@ module AssignmentlogDatabricks 'modules/auxiliary/databricksRoleAssignmentKeyVau
   scope:verifyDatabricksRG
   params:{
     keyVaultId:logkeyVault.outputs.keyvaultId
+    databricksId:databricksId
   }
 }
 

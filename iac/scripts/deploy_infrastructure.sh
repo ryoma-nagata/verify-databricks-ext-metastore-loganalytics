@@ -13,7 +13,7 @@ set -o nounset
 # ENV_NAME
 # AZURE_LOCATION
 # AZURE_SUBSCRIPTION_ID
-
+# DATABRICK_ID
 #####################
 
 #####################
@@ -36,7 +36,7 @@ arm_output=$(az deployment sub validate \
     --location $AZURE_LOCATION \
     --template-file ./iac/infra/main.bicep \
     --parameters location=$AZURE_LOCATION project=$PROJECT env=$ENV_NAME deployment_id=$DEPLOYMENT_ID signed_in_user_object_id=$signed_in_user_object_id\
-    sqlLogin=$SQLLOGIN sqlPassword=$SQLPASSWORD \
+    sqlLogin=$SQLLOGIN sqlPassword=$SQLPASSWORD databricksId=$DATABRICK_ID\
     --output json)
 
 # # Deploy arm template
@@ -46,7 +46,7 @@ arm_output=$(az deployment sub create \
     --location $AZURE_LOCATION \
     --template-file ./iac/infra/main.bicep \
     --parameters location=$AZURE_LOCATION project=$PROJECT env=$ENV_NAME deployment_id=$DEPLOYMENT_ID signed_in_user_object_id=$signed_in_user_object_id\
-    sqlLogin=$SQLLOGIN sqlPassword=$SQLPASSWORD \
+    sqlLogin=$SQLLOGIN sqlPassword=$SQLPASSWORD databricksId=$DATABRICK_ID\
     --output json)
 
 echo "Finish deploying resources "

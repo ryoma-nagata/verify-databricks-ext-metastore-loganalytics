@@ -18,14 +18,6 @@ set -o nounset
 ####################################
 
 
-# HIVEKEYVAULTRESOURCEID='/subscriptions/d8e5e9d7-9314-492c-8734-1728139a350d/resourceGroups/rg-adbconfig-0182-verify/providers/Microsoft.KeyVault/vaults/mkvadbconfig0182verify'
-# HIVEKEYVAULTDNSNAME='https://mkvadbconfig0182verify.vault.azure.net/'
-# DATABRICKSHOSTURL='https://adb-6041374376217211.11.azuredatabricks.net/'
-# DATABRICKSWORKSPACESUBSCRIPTIONID='d8e5e9d7-9314-492c-8734-1728139a350d'
-# DATABRICKSWORKSPACERESOURCEGROUPNAME='rg-adbconfig-0182-verify'
-# DATABRICKSWORKSPACENAME='adb002-adbconfig-0182-verify'
-# LOGKEYVAULTRESOURCEID='/subscriptions/d8e5e9d7-9314-492c-8734-1728139a350d/resourceGroups/rg-adbconfig-0182-verify/providers/Microsoft.KeyVault/vaults/lkvadbconfig0182verify'
-# LOGKEYVAULTDNSNAME='https://lkvadbconfig0182verify.vault.azure.net/'
 
 databricksHostUrl=$DATABRICKSHOSTURL
 databricksWorkspaceSubscriptionId=$DATABRICKSWORKSPACESUBSCRIPTIONID

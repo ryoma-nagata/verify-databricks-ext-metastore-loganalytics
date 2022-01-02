@@ -6,10 +6,10 @@ targetScope = 'resourceGroup'
 
 // Parameters
 param keyVaultId string
+param databricksId string 
 
 // Variables
 var keyVaultName = length(split(keyVaultId, '/')) >= 9 ? last(split(keyVaultId, '/')) : 'incorrectSegmentLength'
-var databricksId = 'f42d97a8-e4be-4da1-a1dd-a8b250f42955'
 
 //https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 var secretUser = resourceId('Microsoft.Authorization/roleDefinitions', '4633458b-17de-408a-b874-0445c86b69e6')

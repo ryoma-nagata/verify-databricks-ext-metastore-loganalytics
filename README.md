@@ -33,6 +33,15 @@
 
 「.devcontainer」フォルダ内の 「envtemplate」を「devcontainer.env」に名前変更して、内容を更新します。
 
+#### databricksIdの確認方法
+
+1. Azure ADで「AzureDatabricks」で検索
+
+![](.image/2022-01-02-10-26-09.png)
+
+2. アプリケーションIDをコピー
+![](.image/2022-01-02-10-27-50.png)
+
 ### 3. Remote-Containerの起動
 
 「Ctrl + Shigt + P」より、「Open Folder in Conteiner」を選択して、コンテナを起動します。
