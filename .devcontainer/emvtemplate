@@ -14,3 +14,6 @@
 # AzureSQLのログイン情報
 SQLLOGIN=''
 SQLPASSWORD=''
+
+# DatabricksのID
+DATABRICKS_ID=''
